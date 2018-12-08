@@ -4,19 +4,17 @@
 
 int main()
 	{
-	std::vector<int> v{ 3, 3, 4, 4, 4, 5, 7 };
+	std::vector<int> v{ 1, 2, 3, 0, 5 };
 
-	std::pair<std::vector<int>::iterator, std::vector<int>::iterator> p = std::equal_range(v.begin(), v.end(), 4);
-
-	std::vector<int>::iterator startIterator = p.first;
-	std::vector<int>::iterator endIterator = p.second;
-
-	int startIndex = startIterator - v.begin(); // 2
-	int endIndex = endIterator - v.begin(); // 5
+	std::vector<int>::iterator it = std::is_sorted_until(v.begin(), v.end()); 
 
 	
 
-	std::cout << startIndex << " " << endIndex << std::endl;
+
+	//auto lambda = [](int i) { std::cout << i << " "; };
+	//std::for_each(v.begin(), v.end(), lambda);
+
+	std::cout << *it << std::endl;
 
 	return 0;
 	}

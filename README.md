@@ -90,6 +90,12 @@ And if you want to access the element that the iterator is pointing too, you can
 int element = *it;
 ```
 
+And if you want the index of that element (if your container uses indices, like a vector), then you can subtract the iterator's position from an iterator point to the beginning of the container.
+
+```
+int index = it - srcVector.begin();
+```
+
 Remember, iterators are just pointers to the elements in a collection. (And if you don't know about pointers, read [this tutorial](https://www.srcmake.com/home/cpp-pointers).)
 
 ---
@@ -105,19 +111,41 @@ Remember, iterators are just pointers to the elements in a collection. (And if y
 ### all_of
 ### any_of
 ### none_of
+
+---
+
 ### for_each
-### find_
+
+Does something for each item in a range. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and a lambda function that does something with the element of the container.
+* Returns void.
+
+```
+std::vector<int> v{ 5, 3, 7, 2, 1 };
+
+auto lambda = [](int i) { std::cout << i << " "; };
+
+std::for_each(v.begin(), v.end(), lambda); // Prints each element in the container.
+```
+
+---
+
+### find
 ### find_if
 ### find_if_not
 ### find_end
 ### find_first_of
 ### adjacent_find
 ### count
+
+---
+
 ### count_if
 
 Counts the number of occurrences satisfying the lambda function.
 
-* Pass in the container's range, and a lambda function that returns true or false.
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and a lambda function that returns true or false.
 * Returns an integer.
 
 ```
@@ -128,11 +156,14 @@ auto lambda = [](int i) { return i > 2; };
 int count = count_if(v.begin(), v.end(), lambda);
 ```
 
+---
+
 ### mismatch
 ### equal
 ### is_permutation
 ### search
 ### search_n
+### lexicographical_compare
 
 ---
 
@@ -183,12 +214,85 @@ int count = count_if(v.begin(), v.end(), lambda);
 
 # Sorting
 
+Sorting data in containers.
+
+---
+
 ### sort
+
+Sort the elements in a container for the given range.
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns void.
+
+```
+std::vector<int> v{ 5, 3, 7, 2, 1 };
+
+std::sort(v.begin(), v.end()); 
+
+// v is now { 1, 2, 3, 5, 7 }.
+```
+
+---
+
 ### stable_sort
+
+Sort the elements in a container for the given range, but the sort is stable.
+
+A "stable" sort means that for equal elements, an element that was ahead of another before the sort will be ahead after the sort. 
+
+```
+std::vector<int> v{ 5, 3, 7, 3, 2, 1 }; // { 5, 3a, 7, 3b, 2, 1 }
+
+std::stable_sort(v.begin(), v.end()); 
+
+// v is now { 1, 2, 3a, 3b, 5, 7 }
+```
+
+Stable sort is best used for objects.
+
+---
+
 ### partial_sort
+
+
+---
+
 ### partial_sort_copy
+
+
+---
+
 ### is_sorted
+
+Check whether a given range is sorted. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns a bool. True if the range is sorted, false if it's not sorted.
+
+```
+std::vector<int> v{ 5, 3, 7, 2, 1 };
+
+bool isSorted = std::is_sorted(v.begin(), v.end()); // false
+```
+
+---
+
 ### is_sort_until
+
+Finds the first element in a range that isn't sorted. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns an iterator to the first unsorted element.
+
+```
+std::vector<int> v{ 2, 3, 4, 1, 5 };
+
+std::vector<int>::iterator it = std::is_sorted_until(v.begin(), v.end()); // Points to the 1
+```
+
+---
+
 ### nth_element
 
 ---
@@ -196,6 +300,8 @@ int count = count_if(v.begin(), v.end(), lambda);
 # Binary Search
 
 These algorithms are about binary searching O(log N) a sorted range for a value.
+
+---
 
 ### lower_bound
 
@@ -206,7 +312,7 @@ Returns an iterator for the lower bound of an element in a range.
 For example, for vector [3, 3, 4, 4, 4, 5, 7], lower_bound(4) points to the very first 4 (at index 2).
 lower_bound(6) points to 7, since that's the first element not less than 6.
 
-* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want, and the element you want to search for. 
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and the element you want to search for. 
 * Returns an iterator to the element. (Or to the container's end if the element doesn't exist.)
 
 ```
@@ -217,13 +323,15 @@ std::vector<int>::iterator it = std::lower_bound(v.begin(), v.end(), 4);
 int index = it - v.begin(); // 2
 ```
 
+---
+
 ### upper_bound
 
 Returns an iterator for the upper bound of an element in a range. 
 
 "Upper bound" means the first element that is greater than the element we're searching for. 
 
-* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want, and the element you want to search for. 
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and the element you want to search for. 
 * Returns an iterator to the element. (Or to the container's end if the element doesn't exist.)
 
 ```
@@ -234,11 +342,13 @@ std::vector<int>::iterator it = std::upper_bound(v.begin(), v.end(), 4);
 int index = it - v.begin(); // 5
 ```
 
+---
+
 ### equal_range
 
 Finds the starting index and ending index for an element in a range. (Meaning if we have duplicates of an item in a container, and we want to find out the range of where those items are.)
 
-* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want, and the element you want to search for. 
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and the element you want to search for. 
 * Returns an `pair` of iterators of the element type.
 
 ```
@@ -253,11 +363,13 @@ int startIndex = startIterator - v.begin(); // 2
 int endIndex = endIterator - v.begin(); // 5
 ```
 
+---
+
 ### binary_search
 
 Returns true if an element exists in a sorted range. Returns false otherwise. Does a binary search to find the item.
 
-* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want, and the element you want to search for. 
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and the element you want to search for. 
 * Returns a bool. 
 
 ```
@@ -270,6 +382,8 @@ bool twoExists = std::binary_search(v.begin(), v.end(), 2); // true
 ---
 
 # Merge
+
+---
 
 ### merge
 ### inplace_merge
@@ -296,6 +410,8 @@ bool twoExists = std::binary_search(v.begin(), v.end(), 2); // true
 
 These algorithms are related to finding the minimum/maximum element in a range, or when comparing two items.
 
+---
+
 ### min
 
 Compares two items and returns the smaller one.
@@ -306,6 +422,8 @@ Compares two items and returns the smaller one.
 ```
 int m = std::min(5, 2); // 2
 ```
+
+---
 
 ### max
 
@@ -318,15 +436,19 @@ Compares two items and returns the larger one.
 int m = std::max(5, 2); // 5
 ```
 
+---
+
 ### minmax
 
 Kind of useless in my opinion. Not even going to post the implementation. see `minmax_element` for something useful.
+
+---
 
 ### min_element
 
 Returns an iterator to the smallest element for a given range. 
 
-* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want. 
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range. 
 * Returns an iterator of the type of the collection.
 
 ```
@@ -335,11 +457,13 @@ std::vector<int> v{ 5, 3, 7, 2, 1 };
 std::vector<int>::iterator it = std::min_element(v.begin(), v.end());
 ```
 
+---
+
 ### max_element
 
 Returns an iterator to the largest element for a given range. 
 
-* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want. 
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range. 
 * Returns an iterator of the type of the collection.
 
 ```
@@ -348,11 +472,13 @@ std::vector<int> v{ 5, 3, 7, 2, 1 };
 std::vector<int>::iterator it = std::max_element(v.begin(), v.end());
 ```
 
+---
+
 ### minmax_element
 
 Returns a `pair` of iterators to the smallest and the largest elements for a given range. (The smallest is the first item, and the largest is the second item.)
 
-* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want. 
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range. 
 * Returns an `std::pair` of iterators of type of the collection.
 
 ```
@@ -365,6 +491,15 @@ int largest = *p.second; // 7
 ```
 
 ---
+
+# Transform
+
+### next_permutation
+### prev_permutation
+
+
+---
+
 
 ### References
 
@@ -379,3 +514,8 @@ int largest = *p.second; // 7
 * Note that I say "range" a lot, but specifically use `vector.begin()` and `vector.end()` most of the time. Remember that your range can be anywhere in the container you want, it doesn't have to be the whole container.
 
 * If you see a problem or if an example is used incorrectly or doesn't work, feel free to raise a pull request, create an issue, or message me on one of the platforms mentioned above. This is meant to be a very very short guide and easy to use, and so some details may be purposely omitted. (Or maybe I'm just a scrub and I don't know how to code LUL.)
+
+
+### Todo
+
+* Make a custom comparator example for stable_sort.
