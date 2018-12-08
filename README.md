@@ -1,4 +1,4 @@
-# C++ STL Algorithms
+# C++ STL Algorithms Cheat Sheet
 
 The C++ Standard Template Library provides algorithms for functions that are commonly needed for container objects. 
 
@@ -8,7 +8,7 @@ The rest of this README is going to contain short explanations of each STL algor
 
 ## Base Code and C++ version
 
-For the sake of testing this code, we'll specify a very basic C++ file that our code would run in. 
+For the sake of testing this code, we'll specify a very basic C++ file that our code would run in. Note that we include `vector`, because that's the container the examples will use, we're including `iostream` for `cout`, and we including `algorithm` for the actual STL algorithms.
 
 #### main.cpp
 
@@ -19,15 +19,13 @@ For the sake of testing this code, we'll specify a very basic C++ file that our 
 
 int main()
 	{
-	std::vector<int> srcVec{ 5, 3, 7, 2, 1 };
-	
 	// INSERT STD:ALGORITHM HERE
 	
 	return 0;
 	}
 ```
 
-We'll use a simple makefile, specifying C++11.
+We'll use a simple makefile to compile and run, specifying C++11.
 
 #### makefile
 
@@ -51,14 +49,14 @@ For example, "find out how many numbers in this vector are greater than 2" is ve
 We don't need to store it in a variable, but we will. 
 Otherwise we'd pass in directly in the algorithm call.
 Capture any variables in this scope inside of the [].
-Put any parameters in the (). 
+Put any parameters in the ().
 */
 auto srcLambda = [](int i) 
 	{ 
 	return i > 2;
 	};
 
-// Use STD's count_if algorithm.
+// Use STL's count_if algorithm.
 int count = count_if(srcVec.begin(), srcVec.end(), srcLambda);
 
 std::cout << count << std::endl;
@@ -67,6 +65,32 @@ std::cout << count << std::endl;
 (Most people actually put the lambda expression on one line; I just exaggerated the curly braces for emphasis in this one example.)
 
 Got it? Good. We'll be using lambda expressions a lot.
+
+## Iterators
+
+Iterators are special pointers that point to a specific place in a collection. 
+
+For example, a `stack` data structure can't have it's items indexed by elements like a `vector` could, but we still might want to access a specific element in the stack once we find it. Well...that's what an iterator is. It just points to an element in a collection.
+
+For example, the following code creates an iterator (special pointer) to the first element in a vector named 'srcVector'.
+
+```
+std::vector<int>::iterator it = srcVector.begin();
+```
+
+If you want to access the next element, you could increment the iterator.
+
+```
+it++;
+```
+
+And if you want to access the element that the iterator is pointing too, you can dereference it.
+
+```
+int element = *it;
+```
+
+Remember, iterators are just pointers to the elements in a collection. (And if you don't know about pointers, read [this tutorial](https://www.srcmake.com/home/cpp-pointers).)
 
 # C++ STL Algorithms
 
@@ -82,7 +106,7 @@ Got it? Good. We'll be using lambda expressions a lot.
 ### find_end
 ### find_first_of
 ### adjacent_find
-### count_
+### count
 ### count_if
 
 Counts the number of occurrences satisfying the lambda function.
@@ -189,11 +213,72 @@ int count = count_if(v.begin(), v.end(), lambda);
 ## Min and Max
 
 ### min
+
+Compares two items and returns the smaller one.
+
+* Pass in two items (`int`s, for example) as parameters.
+* Returns the item's type. 
+
+```
+int m = std::min(5, 2);
+```
+
 ### max
+
+Compares two items and returns the larger one.
+
+* Pass in two items (`int`s, for example) as parameters.
+* Returns the item's type. 
+
+```
+int m = std::max(5, 2);
+```
+
 ### minmax
+
+Kind of useless in my opinion. Not even going to post the implementation. see `minmax_element` for something useful.
+
 ### min_element
+
+Returns an iterator to the smallest element for a given range. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want. 
+* Returns an iterator of the type of the collection.
+
+```
+std::vector<int> v{ 5, 3, 7, 2, 1 };
+
+std::vector<int>::iterator it = std::min_element(v.begin(), v.end());
+```
+
 ### max_element
+
+Returns an iterator to the largest element for a given range. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want. 
+* Returns an iterator of the type of the collection.
+
+```
+std::vector<int> v{ 5, 3, 7, 2, 1 };
+
+std::vector<int>::iterator it = std::max_element(v.begin(), v.end());
+```
+
 ### minmax_element
+
+Returns a `pair` of iterators to the smallest and the largest elements for a given range. (The smallest is the first item, and the largest is the second item.)
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want. 
+* Returns an `std::pair` of iterators of type of the collection.
+
+```
+std::vector<int> v{ 5, 3, 7, 2, 1 };
+
+std::pair<std::vector<int>::iterator, std::vector<int>::iterator> p = std::minmax_element (v.begin(), v.end());
+
+int smallest = *p.first;
+int largest = *p.second;
+```
 
 
 ### References
@@ -202,8 +287,8 @@ int count = count_if(v.begin(), v.end(), lambda);
 
 * [Jonathan Boccara's CppCon Talk about the STL Algorithms.](https://www.youtube.com/watch?v=2olsGf6JIkU&t=7s)
 
-### Note 
+### Notes
 
-If you see a problem or if an example is used incorrectly or doesn't work, feel free to raise a pull request, create an issue, or message me on one of the platforms mentioned above. This is meant to be a very very short guide and easy to use, and so some details may be purposely omitted. 
+* I'm purposely not using the `auto` keyword in this documentation, but use it in your real code.
 
-Or maybe I'm just a scrub and I don't know how to code LUL.
+* If you see a problem or if an example is used incorrectly or doesn't work, feel free to raise a pull request, create an issue, or message me on one of the platforms mentioned above. This is meant to be a very very short guide and easy to use, and so some details may be purposely omitted. (Or maybe I'm just a scrub and I don't know how to code LUL.)

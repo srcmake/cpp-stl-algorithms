@@ -4,23 +4,15 @@
 
 int main()
 	{
-	std::vector<int> srcVec{ 5, 3, 7, 2, 1 };
-	
-	// Lambda expression. 
-	// We don't need to store it in a variable, but we will.
-	// Notice it's just like a function.
-	// Capture any variables in this scope inside of the [].
-	// Put any parameters in the ().
-	auto srcLambda = [](int i) 
-		{ 
-		return i > 2;
-		};
+	std::vector<int> v{ 5, 3, 7, 2, 1 };
 
-	// Use STL's count_if algorithm.
-	int count = count_if(srcVec.begin(), srcVec.end(), srcLambda);
+	std::pair<std::vector<int>::iterator, std::vector<int>::iterator> p = std::minmax_element (v.begin(), v.end());
 
-	// Output the result.
-	std::cout << count << std::endl;
+	int smallest = *p.first;
+	int largest = *p.second;
 	
+
+	std::cout << smallest << " " << largest << std::endl;
+
 	return 0;
 	}
