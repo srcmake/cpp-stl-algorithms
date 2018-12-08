@@ -92,9 +92,15 @@ int element = *it;
 
 Remember, iterators are just pointers to the elements in a collection. (And if you don't know about pointers, read [this tutorial](https://www.srcmake.com/home/cpp-pointers).)
 
+---
+---
+
 # C++ STL Algorithms
 
-## Figure Something Out About Data
+---
+---
+
+# Figure Something Out About Data
 
 ### all_of
 ### any_of
@@ -128,7 +134,9 @@ int count = count_if(v.begin(), v.end(), lambda);
 ### search
 ### search_n
 
-## Modify The Data
+---
+
+# Modify The Data
 
 ### copy
 ### copy_n
@@ -161,7 +169,9 @@ int count = count_if(v.begin(), v.end(), lambda);
 ### random_shuffle
 ### shuffle
 
-## Divide
+---
+
+# Divide
 
 ### is_partition
 ### partition
@@ -169,8 +179,9 @@ int count = count_if(v.begin(), v.end(), lambda);
 ### partition_copy
 ### partition_point
 
+---
 
-## Sorting
+# Sorting
 
 ### sort
 ### stable_sort
@@ -180,16 +191,85 @@ int count = count_if(v.begin(), v.end(), lambda);
 ### is_sort_until
 ### nth_element
 
+---
 
-## Binary Search
+# Binary Search
+
+These algorithms are about binary searching O(log N) a sorted range for a value.
 
 ### lower_bound
+
+Returns an iterator for the lower bound of an element in a range. 
+
+"Lower bound" means the first element that is not less than the element we're searching for. 
+
+For example, for vector [3, 3, 4, 4, 4, 5, 7], lower_bound(4) points to the very first 4 (at index 2).
+lower_bound(6) points to 7, since that's the first element not less than 6.
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want, and the element you want to search for. 
+* Returns an iterator to the element. (Or to the container's end if the element doesn't exist.)
+
+```
+std::vector<int> v{ 3, 3, 4, 4, 4, 5, 7 };
+
+std::vector<int>::iterator it = std::lower_bound(v.begin(), v.end(), 4);
+
+int index = it - v.begin(); // 2
+```
+
 ### upper_bound
+
+Returns an iterator for the upper bound of an element in a range. 
+
+"Upper bound" means the first element that is greater than the element we're searching for. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want, and the element you want to search for. 
+* Returns an iterator to the element. (Or to the container's end if the element doesn't exist.)
+
+```
+std::vector<int> v{ 3, 3, 4, 4, 4, 5, 7 };
+
+std::vector<int>::iterator it = std::upper_bound(v.begin(), v.end(), 4);
+
+int index = it - v.begin(); // 5
+```
+
 ### equal_range
+
+Finds the starting index and ending index for an element in a range. (Meaning if we have duplicates of an item in a container, and we want to find out the range of where those items are.)
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want, and the element you want to search for. 
+* Returns an `pair` of iterators of the element type.
+
+```
+std::vector<int> v{ 3, 3, 4, 4, 4, 5, 7 };
+
+std::pair<std::vector<int>::iterator, std::vector<int>::iterator> p = std::equal_range(v.begin(), v.end(), 4);
+
+std::vector<int>::iterator startIterator = p.first;
+std::vector<int>::iterator endIterator = p.second;
+
+int startIndex = startIterator - v.begin(); // 2
+int endIndex = endIterator - v.begin(); // 5
+```
+
 ### binary_search
 
+Returns true if an element exists in a sorted range. Returns false otherwise. Does a binary search to find the item.
 
-## Merge
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range you want, and the element you want to search for. 
+* Returns a bool. 
+
+```
+std::vector<int> v{ 5, 3, 7, 2, 1 };
+
+std::sort(v.begin(), v.end());
+
+bool twoExists = std::binary_search(v.begin(), v.end(), 2); // true
+```
+---
+
+# Merge
 
 ### merge
 ### inplace_merge
@@ -199,8 +279,9 @@ int count = count_if(v.begin(), v.end(), lambda);
 ### set_difference
 ### set_symmetric_difference
 
+---
 
-## Heap
+# Heap
 
 ### push_heap
 ### pop_heap
@@ -209,8 +290,11 @@ int count = count_if(v.begin(), v.end(), lambda);
 ### is_heap
 ### is_heap_until
 
+---
 
-## Min and Max
+# Min and Max
+
+These algorithms are related to finding the minimum/maximum element in a range, or when comparing two items.
 
 ### min
 
@@ -220,7 +304,7 @@ Compares two items and returns the smaller one.
 * Returns the item's type. 
 
 ```
-int m = std::min(5, 2);
+int m = std::min(5, 2); // 2
 ```
 
 ### max
@@ -231,7 +315,7 @@ Compares two items and returns the larger one.
 * Returns the item's type. 
 
 ```
-int m = std::max(5, 2);
+int m = std::max(5, 2); // 5
 ```
 
 ### minmax
@@ -276,10 +360,11 @@ std::vector<int> v{ 5, 3, 7, 2, 1 };
 
 std::pair<std::vector<int>::iterator, std::vector<int>::iterator> p = std::minmax_element (v.begin(), v.end());
 
-int smallest = *p.first;
-int largest = *p.second;
+int smallest = *p.first; // 1
+int largest = *p.second; // 7
 ```
 
+---
 
 ### References
 
@@ -290,5 +375,7 @@ int largest = *p.second;
 ### Notes
 
 * I'm purposely not using the `auto` keyword in this documentation, but use it in your real code.
+
+* Note that I say "range" a lot, but specifically use `vector.begin()` and `vector.end()` most of the time. Remember that your range can be anywhere in the container you want, it doesn't have to be the whole container.
 
 * If you see a problem or if an example is used incorrectly or doesn't work, feel free to raise a pull request, create an issue, or message me on one of the platforms mentioned above. This is meant to be a very very short guide and easy to use, and so some details may be purposely omitted. (Or maybe I'm just a scrub and I don't know how to code LUL.)
