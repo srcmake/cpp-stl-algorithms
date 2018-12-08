@@ -108,9 +108,59 @@ Remember, iterators are just pointers to the elements in a collection. (And if y
 
 # Figure Something Out About Data
 
+Need to do something with the data in your container? Look here.
+
+---
+
+
 ### all_of
+
+Check if every element in the range satisfies the condition. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and a lambda function that does something with the element of the container.
+* Returns a bool. True if all elements satisfied the condition, false otherwise.
+
+```
+std::vector<int> v{ 5, 3, 7, 9, 4 };
+
+auto lambda = [](int i) { return i > 1; };
+
+bool allGreaterThanOne = std::all_of(v.begin(), v.end(), lambda); // true
+```
+
+---
+
 ### any_of
+
+Check if any element in the range satisfies the condition. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and a lambda function that does something with the element of the container.
+* Returns a bool. True if any element satisfied the condition, false otherwise.
+
+```
+std::vector<int> v{ 5, 3, 7, 9, 4 };
+
+auto lambda = [](int i) { return i > 8; };
+
+bool anyGreaterThanEight = std::any_of(v.begin(), v.end(), lambda); // true
+```
+
+---
+
 ### none_of
+
+Check if none of the elements in the range satisfies the condition. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and a lambda function that does something with the element of the container.
+* Returns a bool. True if all elements fail the condition, false if any element passes the condition.
+
+```
+std::vector<int> v{ 5, 3, 7, 9, 4 };
+
+auto lambda = [](int i) { return i > 10; };
+
+bool noneGreaterThanTen = std::none_of(v.begin(), v.end(), lambda); // true
+```
 
 ---
 
@@ -132,18 +182,94 @@ std::for_each(v.begin(), v.end(), lambda); // Prints each element in the contain
 ---
 
 ### find
+
+Find an item in a given range.
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and an item that you want to find.
+* Returns an iterator to the first element in the range that is equal to the item we specified.
+
+```
+std::vector<int> v{ 5, 3, 7, 9, 4 };
+	
+std::vector<int>::iterator it = std::find(v.begin(), v.end(), 3);
+```
+
+---
+
 ### find_if
+
+Find the first item that satisfies a condition.
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and a lambda function that returns a bool.
+* Returns an iterator to the first element in the range that satisfies the lambda's condition.
+
+```
+std::vector<int> v{ 5, 3, 7, 9, 4 };
+	
+auto lambda = [](int i) { return i > 6; };
+
+std::vector<int>::iterator it = std::find_if(v.begin(), v.end(), lambda); 
+
+int firstElementGreaterThanSix = *it; // 7
+```
+
+---
+
 ### find_if_not
+
+Find the first item that does not satisfy a condition.
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and a lambda function that returns a bool.
+* Returns an iterator to the first element in the range that does not satisfy the lambda's condition.
+
+```
+std::vector<int> v{ 5, 3, 7, 9, 4 };
+	
+auto lambda = [](int i) { return i > 6; };
+
+std::vector<int>::iterator it = std::find_if_not(v.begin(), v.end(), lambda); 
+
+int firstElementLessThanSix = *it; // 5
+```
+
+---
+
 ### find_end
+
+TODO
+
+---
+
 ### find_first_of
+
+TODO
+
+---
+
 ### adjacent_find
+
+TODO
+
+---
+
 ### count
+
+Count the number of times an item appears in the range. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and the item we want to count.
+* Returns an integer.
+
+```
+std::vector<int> v{ 5, 3, 7, 9, 3, 4 };
+	
+int countOfThree = std::count(v.begin(), v.end(), 3); // 2
+```
 
 ---
 
 ### count_if
 
-Counts the number of occurrences satisfying the lambda function.
+Count the number of occurrences satisfying the lambda function.
 
 * Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and a lambda function that returns true or false.
 * Returns an integer.
@@ -159,56 +285,293 @@ int count = count_if(v.begin(), v.end(), lambda);
 ---
 
 ### mismatch
+
+Finds the first occurrence where two rangers differ. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and an iterator to the beginning of the second range.
+* Returns a `pair` of iterators to the positions where the ranges occur.
+
+```
+std::vector<int> v1{ 5, 3, 7, 9 };
+std::vector<int> v2{ 5, 3, 2, 9 };
+	
+std::pair<std::vector<int>::iterator, std::vector<int>::iterator> p = std::mismatch(v1.begin(), v1.end(), v2.begin());
+
+int element1 = *p.first; // 7
+int element2 = *p.second; // 2
+```
+
+---
+
 ### equal
+
+Check if the elements in two ranges are equal. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and an iterator to the beginning of the second range.
+* Returns a bool. True if the elements are equal, false otherwise.
+
+```
+std::vector<int> v1{ 5, 4, 6 };
+std::vector<int> v2{ 5, 4, 6 };
+
+bool isEqual = std::equal(v1.begin(), v1.end(), v2.begin()); // true
+```
+
+---
+
 ### is_permutation
+
+TODO
+
+---
+
 ### search
+
+TODO
+
+---
+
 ### search_n
+
+TODO
+
+---
+
 ### lexicographical_compare
+
+TODO
 
 ---
 
 # Modify The Data
 
+TODO
+
+---
+
 ### copy
+
+TODO
+
+---
+
 ### copy_n
+
+TODO
+
+---
+
 ### copy_if
+
+TODO
+
+---
+
 ### copy_backward
+
+TODO
+
+---
+
 ### move
+
+TODO
+
+---
+
 ### move_backward
+
+TODO
+
+---
+
 ### swap
+
+Swaps the values of two items. 
+
+* Pass in the first and the second item.
+* Returns void.
+
+```
+int a = 5;
+int b = 10;
+
+std::swap(a, b); // Now a = 10 and b = 5.
+```
+
+---
+
 ### swap_ranges
+
+TODO
+
+---
+
 ### iter_swap
+
+TODO
+
+---
+
 ### transform
+
+TODO
+
+---
+
 ### replace
+
+TODO
+
+---
+
 ### replace_if
+
+TODO
+
+---
+
 ### replace_copy
+
+TODO
+
+---
+
 ### replace_copy_if
+
+TODO
+
+---
+
 ### fill
+
+TODO
+
+---
+
 ### fill_n
+
+TODO
+
+---
+
 ### generate
+
+TODO
+
+---
+
 ### generate_n
+
+TODO
+
+---
+
 ### remove
+
+TODO
+
+---
+
 ### remove_if
+
+TODO
+
+---
+
 ### remove_copy
+
+TODO
+
+---
+
 ### remove_copy_if
+
+TODO
+
+---
+
 ### unique
+
+TODO
+
+---
+
 ### unique_xopy
+
+TODO
+
+---
+
 ### reverse
+
+TODO
+
+---
+
 ### reverse_copy
+
+TODO
+
+---
+
 ### rotate
+
+TODO
+
+---
+
 ### rotate_copy
+
+TODO
+
+---
+
 ### random_shuffle
+
+TODO
+
+---
+
 ### shuffle
+
+TODO
 
 ---
 
 # Divide
 
+TODO
+
+---
+
 ### is_partition
+
+TODO
+
+---
+
 ### partition
+
+TODO
+
+---
+
 ### stable_partition
+
+TODO
+
+---
+
 ### partition_copy
+
+TODO
+
+---
+
 ### partition_point
+
+TODO
 
 ---
 
@@ -255,11 +618,13 @@ Stable sort is best used for objects.
 
 ### partial_sort
 
+TODO
 
 ---
 
 ### partial_sort_copy
 
+TODO
 
 ---
 
@@ -294,6 +659,23 @@ std::vector<int>::iterator it = std::is_sorted_until(v.begin(), v.end()); // Poi
 ---
 
 ### nth_element
+
+For the position that you specify in a range, places the element at that position that would be there if the range was sorted. ("What would the nth element be if this range was sorted" without actually sorting the entire range.)
+
+* Pass in an iterator to the beginning of the range, an iterator to the position we want to find out about, and an iterator to the end of the range.
+* Returns void. (The range is edited, though.)
+
+```
+std::vector<int> v{ 5, 3, 7, 9, 4 };
+	
+// v sorted would be { 3, 4, 5, 7, 9 }
+
+std::vector<int>::iterator it = v.begin() + 1; // 2nd element in v.
+
+std::nth_element(v.begin(), it, v.end());
+
+int element = v[1]; // 4
+```
 
 ---
 
@@ -383,26 +765,91 @@ bool twoExists = std::binary_search(v.begin(), v.end(), 2); // true
 
 # Merge
 
+Merging ranges and containers.
+
 ---
 
 ### merge
+
+TODO
+
+---
+
 ### inplace_merge
+
+TODO
+
+---
+
 ### includes
+
+TODO
+
+---
+
 ### set_union
+
+TODO
+
+---
+
 ### set_intersection
+
+TODO
+
+---
+
 ### set_difference
+
+TODO
+
+---
+
 ### set_symmetric_difference
+
+TODO
 
 ---
 
 # Heap
 
+Algorithms regarding heap data structures.
+
+---
+
 ### push_heap
+
+TODO
+
+---
+
 ### pop_heap
+
+TODO
+
+---
+
 ### make_heap
+
+TODO
+
+---
+
 ### sort_heap
+
+TODO
+
+---
+
 ### is_heap
+
+TODO
+
+---
+
 ### is_heap_until
+
+TODO
 
 ---
 
@@ -495,17 +942,24 @@ int largest = *p.second; // 7
 # Transform
 
 ### next_permutation
-### prev_permutation
 
+TODO
 
 ---
 
+### prev_permutation
+
+TODO
+
+---
+
+# End Notes
 
 ### References
 
 * [cplusplus.com's list of STL algorithms.](http://www.cplusplus.com/reference/algorithm/)
 
-* [Jonathan Boccara's CppCon Talk about the STL Algorithms.](https://www.youtube.com/watch?v=2olsGf6JIkU&t=7s)
+* [Jonathan Boccara's CppCon Talk about the STL Algorithms.](https://www.youtube.com/watch?v=2olsGf6JIkU)
 
 ### Notes
 
@@ -515,7 +969,13 @@ int largest = *p.second; // 7
 
 * If you see a problem or if an example is used incorrectly or doesn't work, feel free to raise a pull request, create an issue, or message me on one of the platforms mentioned above. This is meant to be a very very short guide and easy to use, and so some details may be purposely omitted. (Or maybe I'm just a scrub and I don't know how to code LUL.)
 
-
 ### Todo
 
 * Make a custom comparator example for stable_sort.
+* Make a note that nth_element has the parameter ordering weird. 
+* Maybe make a section explaining pairs?
+
+Category types?
+1. Figure something out about container/range.
+2. Modify the container/range.
+2. Find one data point. (If get iterator back then it's this.)
