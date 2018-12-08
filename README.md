@@ -68,118 +68,132 @@ std::cout << count << std::endl;
 
 Got it? Good. We'll be using lambda expressions a lot.
 
-## C++ STL Algorithms
+# C++ STL Algorithms
 
-### Figure Something Out About Data
+## Figure Something Out About Data
 
-#### all_of
-#### any_of
-#### none_of
-#### for_each
-#### find_
-#### find_if
-#### find_if_not
-#### find_end
-#### find_first_of
-#### adjacent_find
-#### count_
-#### count_if
-#### mismatch
-#### equal
-#### is_permutation
-#### search
-#### search_n
+### all_of
+### any_of
+### none_of
+### for_each
+### find_
+### find_if
+### find_if_not
+### find_end
+### find_first_of
+### adjacent_find
+### count_
+### count_if
 
-### Modify The Data
+Counts the number of occurrences satisfying the lambda function.
 
-#### copy
-#### copy_n
-#### copy_if
-#### copy_backward
-#### move
-#### move_backward
-#### swap
-#### swap_ranges
-#### iter_swap
-#### transform
-#### replace
-#### replace_if
-#### replace_copy
-#### replace_copy_if
-#### fill
-#### fill_n
-#### generate
-#### generate_n
-#### remove
-#### remove_if
-#### remove_copy
-#### remove_copy_if
-#### unique
-#### unique_xopy
-#### reverse
-#### reverse_copy
-#### rotate
-#### rotate_copy
-#### random_shuffle
-#### shuffle
+* Pass in the container's range, and a lambda function that returns true or false.
+* Returns an integer.
 
-### Divide
+```
+std::vector<int> v{ 5, 3, 7, 2, 1 };
 
-#### is_partition
-#### partition
-#### stable_partition
-#### partition_copy
-#### partition_point
+auto lambda = [](int i) { return i > 2; };
 
+int count = count_if(v.begin(), v.end(), lambda);
+```
 
-### Sorting
+### mismatch
+### equal
+### is_permutation
+### search
+### search_n
 
-#### sort
-#### stable_sort
-#### partial_sort
-#### partial_sort_copy
-#### is_sorted
-#### is_sort_until
-#### nth_element
+## Modify The Data
 
+### copy
+### copy_n
+### copy_if
+### copy_backward
+### move
+### move_backward
+### swap
+### swap_ranges
+### iter_swap
+### transform
+### replace
+### replace_if
+### replace_copy
+### replace_copy_if
+### fill
+### fill_n
+### generate
+### generate_n
+### remove
+### remove_if
+### remove_copy
+### remove_copy_if
+### unique
+### unique_xopy
+### reverse
+### reverse_copy
+### rotate
+### rotate_copy
+### random_shuffle
+### shuffle
 
-### Binary Search
+## Divide
 
-#### lower_bound
-#### upper_bound
-#### equal_range
-#### binary_search
+### is_partition
+### partition
+### stable_partition
+### partition_copy
+### partition_point
 
 
-### Merge
+## Sorting
 
-#### merge
-#### inplace_merge
-#### includes
-#### set_union
-#### set_intersection
-#### set_difference
-#### set_symmetric_difference
-
-
-### Heap
-
-#### push_heap
-#### pop_heap
-#### make_heap
-#### sort_heap
-#### is_heap
-#### is_heap_until
+### sort
+### stable_sort
+### partial_sort
+### partial_sort_copy
+### is_sorted
+### is_sort_until
+### nth_element
 
 
-### Min and Max
+## Binary Search
 
-#### min
-#### max
-#### minmax
-#### min_element
-#### max_element
-#### minmax_element
+### lower_bound
+### upper_bound
+### equal_range
+### binary_search
+
+
+## Merge
+
+### merge
+### inplace_merge
+### includes
+### set_union
+### set_intersection
+### set_difference
+### set_symmetric_difference
+
+
+## Heap
+
+### push_heap
+### pop_heap
+### make_heap
+### sort_heap
+### is_heap
+### is_heap_until
+
+
+## Min and Max
+
+### min
+### max
+### minmax
+### min_element
+### max_element
+### minmax_element
 
 
 ### References
