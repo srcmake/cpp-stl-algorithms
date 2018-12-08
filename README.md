@@ -10,7 +10,7 @@ The rest of this README is going to contain short explanations of each STL algor
 
 For the sake of testing this code, we'll specify a very basic C++ file that our code would run in. 
 
-main.cpp
+#### main.cpp
 
 ```
 #include <iostream>
@@ -29,7 +29,7 @@ int main()
 
 We'll use a simple makefile, specifying C++11.
 
-makefile
+#### makefile
 
 ```
 all:
@@ -64,37 +64,132 @@ int count = count_if(srcVec.begin(), srcVec.end(), srcLambda);
 std::cout << count << std::endl;
 ```
 
+(Most people actually put the lambda expression on one line; I just exaggerated the curly braces for emphasis in this one example.)
+
 Got it? Good. We'll be using lambda expressions a lot.
 
 ## C++ STL Algorithms
 
-### Sorting 
+### Figure Something Out About Data
+
+#### all_of
+#### any_of
+#### none_of
+#### for_each
+#### find_
+#### find_if
+#### find_if_not
+#### find_end
+#### find_first_of
+#### adjacent_find
+#### count_
+#### count_if
+#### mismatch
+#### equal
+#### is_permutation
+#### search
+#### search_n
+
+### Modify The Data
+
+#### copy
+#### copy_n
+#### copy_if
+#### copy_backward
+#### move
+#### move_backward
+#### swap
+#### swap_ranges
+#### iter_swap
+#### transform
+#### replace
+#### replace_if
+#### replace_copy
+#### replace_copy_if
+#### fill
+#### fill_n
+#### generate
+#### generate_n
+#### remove
+#### remove_if
+#### remove_copy
+#### remove_copy_if
+#### unique
+#### unique_xopy
+#### reverse
+#### reverse_copy
+#### rotate
+#### rotate_copy
+#### random_shuffle
+#### shuffle
+
+### Divide
+
+#### is_partition
+#### partition
+#### stable_partition
+#### partition_copy
+#### partition_point
+
+
+### Sorting
+
+#### sort
+#### stable_sort
+#### partial_sort
+#### partial_sort_copy
+#### is_sorted
+#### is_sort_until
+#### nth_element
+
+
+### Binary Search
+
+#### lower_bound
+#### upper_bound
+#### equal_range
+#### binary_search
+
 
 ### Merge
 
+#### merge
+#### inplace_merge
+#### includes
+#### set_union
+#### set_intersection
+#### set_difference
+#### set_symmetric_difference
+
+
 ### Heap
 
-
-Queries
-Raw memory
-Sets
-Movers
-Value Modifiers
-Structure Changers
-Permutations
+#### push_heap
+#### pop_heap
+#### make_heap
+#### sort_heap
+#### is_heap
+#### is_heap_until
 
 
-### TODO - Add social media and website links here, and the as well as contact stuff.
+### Min and Max
 
-TODO - Make the website blog post point to this page
+#### min
+#### max
+#### minmax
+#### min_element
+#### max_element
+#### minmax_element
+
 
 ### References
 
-[A cplusplus.com reference.](http://www.cplusplus.com/reference/algorithm/)
-[Jonathan Boccara's CPPCon Talk about the STL Algorithms.](https://www.youtube.com/watch?v=2olsGf6JIkU&t=7s)
+* [cplusplus.com's list of STL algorithms.](http://www.cplusplus.com/reference/algorithm/)
+
+* [Jonathan Boccara's CppCon Talk about the STL Algorithms.](https://www.youtube.com/watch?v=2olsGf6JIkU&t=7s)
 
 ### Note 
 
-If you see a problem or if an example is used incorrectly or doesn't work, feel free to raise a pull request, create an issue, or message me on one of the platforms mentioned above. This is meant to be very very short and easy to use, and so some details may be left out. 
+If you see a problem or if an example is used incorrectly or doesn't work, feel free to raise a pull request, create an issue, or message me on one of the platforms mentioned above. This is meant to be a very very short guide and easy to use, and so some details may be purposely omitted. 
 
 Or maybe I'm just a scrub and I don't know how to code LUL.
