@@ -236,19 +236,50 @@ int firstElementLessThanSix = *it; // 5
 
 ### find_end
 
-TODO
+For a range, find the last occurence of a sequence in that range. (Ex. Get the last "oo" in "moo_cookies".)
+
+* Pass in an iterator to the beginning of the first range, and an iterator to the end of the first range, and an iterator to the beginning of the sequence, and an iterator to the end of the sequence,
+* Returns an iterator to the first item of the sequence.
+
+
+```
+std::string s = "moo_cookies";
+std::string t = "oo";
+
+std::string::iterator it = std::find_end(s.begin(), s.end(), t.begin(), t.end()); // Points to the 'o' after the 'c'
+```
 
 ---
 
 ### find_first_of
 
-TODO
+For a range, find the first occurence of a sequence in that range. (Ex. Get the first "oo" in "moo_cookies".)
+
+* Pass in an iterator to the beginning of the first range, and an iterator to the end of the first range, and an iterator to the beginning of the sequence, and an iterator to the end of the sequence,
+* Returns an iterator to the first item of the sequence.
+
+
+```
+std::string s = "moo_cookies";
+std::string t = "oo";
+
+std::string::iterator it = std::find_first_of(s.begin(), s.end(), t.begin(), t.end()); // Points to the 'o' after the 'm
+```
 
 ---
 
 ### adjacent_find
 
-TODO
+Find the first occurrence of two consecutive elements that match in a range. (Ex. The "cc" in "accentt".)
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns an iterator to the first item in the match.
+
+```
+std::string s = "accentt";
+
+std::string::iterator it = std::adjacent_find(s.begin(), s.end()); // Points to the first 'c'
+```
 
 ---
 
@@ -1016,13 +1047,35 @@ int largest = *p.second; // 7
 
 ### next_permutation
 
-TODO
+Rearranges the items in the specified range into the next lexographically greater permutation. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range. 
+* Returns a bool. True if the range was transformed, false otherwise (if there was no such possible permutation).
+
+```
+std::string s = "abc";
+
+std::next_permutation(s.begin(), s.end());
+
+// s is now "acb"
+```
 
 ---
 
 ### prev_permutation
 
-TODO
+Rearranges the items in the specified range into the previous lexographically ordered permutation. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range. 
+* Returns a bool. True if the range was transformed, false otherwise (if there was no such possible permutation).
+
+```
+std::string s = "acb";
+
+std::prev_permutation(s.begin(), s.end());
+
+// s is now "abc"
+```
 
 ---
 
@@ -1048,6 +1101,7 @@ TODO
 * Make a note that nth_element has the parameter ordering weird. 
 * Maybe make a section explaining pairs?
 * Change some of the vector examples to strings.
+* Make note about possible changes because of inconsistencies in words/code.
 
 Category types?
 1. Figure something out about container/range.
