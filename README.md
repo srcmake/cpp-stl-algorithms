@@ -321,25 +321,67 @@ bool isEqual = std::equal(v1.begin(), v1.end(), v2.begin()); // true
 
 ### is_permutation
 
-TODO
+Check if a range is a permutation of another. 
+
+A "permutation" is if the items in one range can be rearranged to form the other range. (Ex. "dog" can be rearranged to form "god".)
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and an iterator to the beginning of the second range.
+* Returns a bool. True if the elements are permutations, false otherwise.
+
+
+```
+std::vector<char> v1{ 'g', 'o', 'd' };
+std::vector<char> v2{ 'd', 'o', 'g' };
+	
+bool isPermutation = std::is_permutation(v1.begin(), v1.end(), v2.begin()); // true
+```
 
 ---
 
 ### search
 
-TODO
+Check if a range contains a certain sequence. (Ex. Does "this" contain "is"?)
+
+* Pass in an iterator to the beginning of the first range, and an iterator to the end of the first range, and an iterator to the beginning of the second range (sequence), and an iterator to the end of the second range (sequence).
+* Returns an iterator to the first item in the range that begins the sequence. 
+
+```
+std::vector<char> v1{ 't', 'h', 'i', 's' };
+std::vector<char> v2{ 'i', 's' };
+	
+std::vector<char>::iterator it = std::search(v1.begin(), v1.end(), v2.begin(), v2.end()); // Points to the 'i' in v1
+```
 
 ---
 
 ### search_n
 
-TODO
+Search a range for a certain number of a specific item. (Ex. Find two 'e's in a row in the word 'esteem'.)
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and the count of the number of the item we need to find, and the item we're trying to find.
+* Returns an iterator to the first item in the range that begins the sequence. 
+
+```
+std::vector<char> v{ 'e', 's', 't', 'e', 'e', 'm' };
+	
+std::vector<char>::iterator it = std::search_n(v.begin(), v.end(), 2, 'e'); // Points to the 'e' after the 't'.
+```
 
 ---
 
 ### lexicographical_compare
 
-TODO
+Lexographically compare two items to find out which is 'smaller'. 
+
+* Pass in an iterator to the beginning of the first range, and an iterator to the end of the first range, and an iterator to the beginning of the second range, and an iterator to the end of the second range.
+* Returns a bool. True if the first range is lexographically less than the second range.
+
+```
+std::string s = "abc";
+std::string t = "def";
+
+bool sIsSmaller = std::lexicographical_compare(s.begin(), s.end(), t.begin(), t.end()); // true
+```
 
 ---
 
@@ -618,13 +660,44 @@ Stable sort is best used for objects.
 
 ### partial_sort
 
-TODO
+For a position in a range, make sure all the elements from the beginning of the range up to that position are the smallest elements in the range and are sorted. (The rest of the elements (which are up to the position until the end of the range) aren't in any specific order.)
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and an iterator to the position we want to partially sort for.
+* Returns void.
+
+```
+std::vector<int> v{ 5, 1, 3, 7, 6, 2, 9, 4 };
+
+std::vector<int>::iterator it = v.begin() + 3;
+
+std::partial_sort(v.begin(), v.end(), it);
+
+// v ends up as { 1, 2, 3, 4, 5, 6, 7, 9}
+```
+
+In the code example, v ends up fully sorted, but only the first three elements are guaranteed to be sorted.
 
 ---
 
 ### partial_sort_copy
 
-TODO
+Copies the items from a range into a second range, in sorted order.
+
+* Pass in an iterator to the beginning of the first range, and an iterator to the end of the first range, and an iterator to the beginning of the range we want to copy into, and an iterator to the end of the range we want to copy into,
+* Returns an iterator to the item after where we finished writing to in the copy range.
+
+```
+std::vector<int> v1{ 5, 1, 3, 7, 6, 2, 9, 4 };
+std::vector<int> v2(6); // Initialize v2 with 6 elements.
+
+std::vector<int>::iterator itStart = v1.begin() + 1;
+std::vector<int>::iterator itEnd = v1.end() - 1;
+
+std::partial_sort_copy(itStart, itEnd, v2.begin(), v2.end());
+
+// v2 ends up as { 1, 2, 3, 6, 7, 9}
+// 5 and 4 are skipped since they aren't in range. v2 is in sorted order.
+```
 
 ---
 
@@ -963,9 +1036,9 @@ TODO
 
 ### Notes
 
-* I'm purposely not using the `auto` keyword in this documentation, but use it in your real code.
+* The `auto` keyword was purposely not used often in this documentation, but use it in your real code.
 
-* Note that I say "range" a lot, but specifically use `vector.begin()` and `vector.end()` most of the time. Remember that your range can be anywhere in the container you want, it doesn't have to be the whole container.
+* Note that I say "range" a lot, even though I specifically use `vector.begin()` and `vector.end()` most of the time. Remember that your range can be anywhere in the container you want.
 
 * If you see a problem or if an example is used incorrectly or doesn't work, feel free to raise a pull request, create an issue, or message me on one of the platforms mentioned above. This is meant to be a very very short guide and easy to use, and so some details may be purposely omitted. (Or maybe I'm just a scrub and I don't know how to code LUL.)
 
@@ -974,6 +1047,7 @@ TODO
 * Make a custom comparator example for stable_sort.
 * Make a note that nth_element has the parameter ordering weird. 
 * Maybe make a section explaining pairs?
+* Change some of the vector examples to strings.
 
 Category types?
 1. Figure something out about container/range.
