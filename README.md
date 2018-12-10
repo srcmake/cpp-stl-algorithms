@@ -867,51 +867,146 @@ bool twoExists = std::binary_search(v.begin(), v.end(), 2); // true
 ```
 ---
 
-# Merge
+# Sorted Data Operations
 
-Merging ranges and containers.
+Is your data sorted? If yes, then do these efficient operations on them.
 
 ---
 
 ### merge
 
-TODO
+Given two sorted ranges, combine them to form one larger sorted range. 
+
+* Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, an iterator to the beginning of the second range, an iterator to the end of the second range, and an iterator to the beginning of the resulting range that you want to place all of the data into.
+* Returns an iterator to the end of the resulting range after placing the last item into it.
+
+```
+std::vector<int> v1{ 1, 3, 5, 9 };
+std::vector<int> v2{ 2, 4, 6, 7 };
+std::vector<int> v3(8);
+
+std::vector<int>::iterator it = std::merge(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin()); 
+// Points to v3.end()
+
+// v3 is { 1, 2, 3, 4, 5, 6, 7, 9 }
+```
 
 ---
 
 ### inplace_merge
 
-TODO
+Given two consecutive sorted ranges (in the same container), do an in-place merge to sort the entire range.
+
+* Pass in an iterator to the beginning of the first sorted range, an iterator to the beginning of the second sorted range, and an iterator to the end of the second sorted range.
+* Returns void.
+
+```
+std::vector<int> v{ 6, 7, 8, 1, 2, 3 };
+
+std::inplace_merge(v.begin(), v.begin()+3, v.end());
+
+// v is now { 1, 2, 3, 6, 7, 8 }
+```
 
 ---
 
 ### includes
 
-TODO
+Check if a given a sorted range contains a second (sorted) range (that you specify). (Ex. Does "abcmopxyz" contain "mop"?)
+
+* Pass in an iterator to the beginning of the first sorted range, an iterator to the end of the first sorted range. an iterator to the beginning of the second sorted range, and an iterator to the second sorted range. 
+* Returns a bool. True if the first range contains the second range, false if it doesn't.
+
+```
+std::string s = "abcmopxyz";
+std::string t = "mop";
+
+bool containsMop = std::includes(s.begin(), s.end(), t.begin(), t.end()); // true
+```
 
 ---
 
 ### set_union
 
-TODO
+Given two sorted ranges, creates a new sorted range from the elements that exist in either range. (The union.)
+
+* Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, an iterator to the beginning of the second range, an iterator to the end of the second range, and an iterator to the beginning of the resulting range that you want to place all of the data into.
+* Returns an iterator to the element after the last element we placed in the resulting range.
+
+```
+std::vector<int> v1{ 1, 2, 3 };
+std::vector<int> v2{ 1, 1, 2, 4 };
+std::vector<int> v3(7);
+
+std::vector<int>::iterator it = std::set_union(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
+// Points to the element after 4 in v3.
+
+// v3 is { 1 1 2 3 4 0 0 } (Zeroes were from the initialization)
+```
+
+Notice that there are only two 1's in the resulting range. `set_union` will take the maximum number of an element from one range; it won't just add them. 
 
 ---
 
 ### set_intersection
 
-TODO
+Given two sorted ranges, created a new sorted range from the elements that exist in both ranges. (The intersection.)
+
+* Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, an iterator to the beginning of the second range, an iterator to the end of the second range, and an iterator to the beginning of the resulting range that you want to place all of the data into.
+* Returns an iterator to the element after the last element we placed in the resulting range.
+
+```
+std::vector<int> v1{ 1, 2, 3 };
+std::vector<int> v2{ 1, 1, 2, 4 };
+std::vector<int> v3(7);
+
+std::vector<int>::iterator it = std::set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
+// Points to the element after 2 in v3.
+
+// v3 is { 1 2 0 0 0 0 0 } (Zeroes were from the initialization)
+```
 
 ---
 
 ### set_difference
 
-TODO
+Given two sorted ranges, created a new sorted range from the elements that exist in the first range that don't exist in the second range. (The difference.)
+
+* Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, an iterator to the beginning of the second range, an iterator to the end of the second range, and an iterator to the beginning of the resulting range that you want to place all of the data into.
+* Returns an iterator to the element after the last element we placed in the resulting range.
+
+```
+std::vector<int> v1{ 1, 2, 3 };
+std::vector<int> v2{ 1, 1, 2, 4 };
+std::vector<int> v3(7);
+
+std::vector<int>::iterator it = std::set_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
+// Points to the element after 3 in v3.
+
+// v3 is { 3 0 0 0 0 0 0 } (Zeroes were from the initialization)
+```
 
 ---
 
 ### set_symmetric_difference
 
-TODO
+Given two sorted ranges, created a new sorted range from the elements that exist in one of the ranges but doesn't exist in the other range. (The symmetric difference.)
+
+* Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, an iterator to the beginning of the second range, an iterator to the end of the second range, and an iterator to the beginning of the resulting range that you want to place all of the data into.
+* Returns an iterator to the element after the last element we placed in the resulting range.
+
+```
+std::vector<int> v1{ 1, 2, 3 };
+std::vector<int> v2{ 1, 1, 2, 4 };
+std::vector<int> v3(7);
+
+std::vector<int>::iterator it = std::set_symmetric_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
+// Points to the element after 4 in v3.
+
+// v3 is { 1 3 4 0 0 0 0 } (Zeroes were from the initialization)
+```
+
+Notice the 1 in v3. That's there because v2 has an extra 1 that v1 does not have. 
 
 ---
 
@@ -919,7 +1014,7 @@ TODO
 
 Algorithms regarding heap data structures.
 
-A "heap" is a tree that always has maximum element as the root node (top of the tree). It's used in priority queues. (It can also have the min element as the root.)
+A "heap" is a binary tree that always has maximum element as the root node (top of the tree). It's used in priority queues. (It can also have the min element as the root.)
 
 ---
 
