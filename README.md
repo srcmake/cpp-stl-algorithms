@@ -612,45 +612,122 @@ TODO
 
 ---
 
-# Divide
+# Partitioned
 
-TODO
+Operate on partioned data, which is split in half based on a certain condition.
 
 ---
 
-### is_partition
+### is_partitioned
 
-TODO
+Check if the data in a range is partitioned according to a condition you specify. (Ex. Are the odd elements separated from the even elements?)
+
+* Pass in an iterator to the beginning of the range, an iterator to the end of the range, and a lambda that returns a bool.
+* Returns a bool. True if the data is in the beginning all return true and the data afterward all return false. Returns false otherwise.
+
+```
+std::vector<int> v{ 5, 3, 1, 8, 4, 6};
+
+auto lambdaIsOdd = [](int i) { return i % 2 != 0; };
+
+bool isPartitioned = std::is_partitioned(v.begin(), v.end(), lambdaIsOdd); // true
+```
+
+Note that if the data is all false and then all true, `is_partitioned` will return false. Make sure your lambda will return "true" for the front data. For example..
+
+```
+std::vector<int> v{ 5, 3, 1, 8, 4, 6};
+
+auto lambdaIsEven = [](int i) { return i % 2 == 0; };
+
+bool isPartitioned = std::is_partitioned(v.begin(), v.end(), lambdaIsEven); // false
+```
+
+isPartitioned is false even though the data is clearly partitioned. That's because the first partition returns false and the second partition returns true. 
 
 ---
 
 ### partition
 
-TODO
+Rearranges the elements in a range so that the first group returns true for the condition you specify. (Ex. Move all odd elements to the front.)
+
+* Pass in an iterator to the beginning of the range, an iterator to the end of the range, and a lambda that returns a bool.
+* Returns an iterator to the first element of the second partition. 
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 5, 6, 7 };
+
+auto lambdaIsOdd = [](int i) { return i % 2 != 0; };
+
+std::vector<int>::iterator it = std::partition(v.begin(), v.end(), lambdaIsOdd);
+
+// v is now { 1 7 3 5 4 6 2 }
+```
 
 ---
 
 ### stable_partition
 
-TODO
+Rearranges the elements in a range so that the first group returns true for the condition you specify. (Ex. Move all odd elements to the front.) Order is preserved.
+
+* Pass in an iterator to the beginning of the range, an iterator to the end of the range, and a lambda that returns a bool.
+* Returns an iterator to the first element of the second partition. 
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 5, 6, 7 };
+
+auto lambdaIsOdd = [](int i) { return i % 2 != 0; };
+
+std::vector<int>::iterator it = std::stable_partition(v.begin(), v.end(), lambdaIsOdd);
+
+// v is now { 1 3 5 7 2 4 6 }
+```
 
 ---
 
 ### partition_copy
 
-TODO
+For a range, copies the data which is true for a condition we specify into some range, and copies the data that is false into some other range. 
+
+* Pass in an iterator to the beginning of the original range, an iterator to the end of the original range, an iterator to the beginning of the "true" range, an iterator to the end of the "false" range, and a lambda that returns a bool.
+* Returns a `pair` of iterators to the element after the last entered element for each of the copy ranges.
+
+```
+std::vector<int> v1{ 1, 2, 3, 4, 5, 6, 7 };
+std::vector<int> v2(7);
+std::vector<int> v3(7);
+
+auto lambdaIsOdd = [](int i) { return i % 2 != 0; };
+
+std::pair<std::vector<int>::iterator, std::vector<int>::iterator> p = std::partition_copy(v1.begin(), v1.end(), v2.begin(), v3.begin(), lambdaIsOdd);
+
+// v2 is now { 1 3 5 7 0 0 0 } (The zeroes are from initialization.)
+// v3 is now { 2 4 6 0 0 0 0 } (The zeroes are from initialization.)
+```
 
 ---
 
 ### partition_point
 
-TODO
+Get the first element in a partitioned range that returns false for a given condition. (The element that begins the partition.)
+
+* Pass in an iterator to the beginning of the range, an iterator to the end of the range, and a lambda that returns a bool.
+* Returns an iterator to the element. 
+
+```
+std::vector<int> v{ 5, 3, 1, 8, 4, 6};
+
+auto lambdaIsOdd = [](int i) { return i % 2 != 0; };
+
+std::vector<int>::iterator it = std::partition_point(v.begin(), v.end(), lambdaIsOdd);
+// Points to 8
+```
 
 ---
 
 # Sorting
 
-Sorting data in containers.
+Sorting data.
 
 ---
 
@@ -1204,7 +1281,9 @@ int largest = *p.second; // 7
 
 ---
 
-# Transform
+# Permutations
+
+Permute data into it's next transformation.
 
 ### next_permutation
 
