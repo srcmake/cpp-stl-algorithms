@@ -919,41 +919,107 @@ TODO
 
 Algorithms regarding heap data structures.
 
----
-
-### push_heap
-
-TODO
-
----
-
-### pop_heap
-
-TODO
+A "heap" is a tree that always has maximum element as the root node (top of the tree). It's used in priority queues. (It can also have the min element as the root.)
 
 ---
 
 ### make_heap
 
-TODO
+Rearranges the items in a range so that they form a heap.
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns void.
+
+```
+std::vector<int> v{ 1, 2, 3, 4 };
+
+std::make_heap(v.begin(), v.end());
+
+// v is now { 4 2 3 1 }
+```
+
+---
+
+### push_heap
+
+If the first elements of a range are a heap, but the last item isn't, then `push_heap` will place that last item into it's correct position.
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns void.
+
+```
+std::vector<int> v{ 4, 2, 3, 1 }; // v is already a heap.
+
+v.push_back(5); // v is no longer a heap.
+
+std::push_heap(v.begin(), v.end());
+
+// v is now { 5 4 2 3 1 }, which is a heap.
+```
+
+---
+
+### pop_heap
+
+Given a range for a heap, places the max element at the end of the range, and rearranges the rest of the elements to be a heap again.
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns void.
+
+```
+std::vector<int> v{ 5, 4, 2, 3, 1 }; // v is a heap.
+
+std::pop_heap(v.begin(), v.end());
+
+// v is now { 4 2 3 1 5 }. (The first 4 elements are a heap.)
+```
 
 ---
 
 ### sort_heap
 
-TODO
+If a range is a heap, rearrange it into sorted order.
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns void.
+
+```
+std::vector<int> v{ 5, 4, 2, 3, 1 }; // v is a heap.
+
+std::sort_heap(v.begin(), v.end());
+
+// v is now { 1 2 3 4 5 }.
+```
 
 ---
 
 ### is_heap
 
-TODO
+Check if a range is a heap. 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns a bool. True if the range is a heap, false if it's not a heap.
+
+```
+std::vector<int> v{ 5, 4, 2, 3, 1 }; // v is a heap.
+
+bool isHeap = std::is_heap(v.begin(), v.end()); // true
+```
 
 ---
 
 ### is_heap_until
 
-TODO
+Find the first place in a range that makes the range fail being a heap.
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns an iterator to the first element that makes the range fail being a heap.
+
+```
+std::vector<int> v{ 5, 4, 2, 3, 1, 200 };
+
+std::vector<int>::iterator it = std::is_heap_until(v.begin(), v.end()); // Points to 200
+```
 
 ---
 
