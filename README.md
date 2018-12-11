@@ -404,7 +404,7 @@ std::vector<char>::iterator it = std::search_n(v.begin(), v.end(), 2, 'e'); // P
 
 Lexographically compare two items to find out which is 'smaller'. 
 
-* Pass in an iterator to the beginning of the first range, and an iterator to the end of the first range, and an iterator to the beginning of the second range, and an iterator to the end of the second range.
+* Pass in an iterator to the beginning of the first range, and an iterator to the end of the first range, an iterator to the beginning of the second range, and an iterator to the end of the second range.
 * Returns a bool. True if the first range is lexographically less than the second range.
 
 ```
@@ -416,45 +416,127 @@ bool sIsSmaller = std::lexicographical_compare(s.begin(), s.end(), t.begin(), t.
 
 ---
 
-# Modify The Data
+# Do Work On Data
 
-TODO
+Do some work involving some data.
 
 ---
 
 ### copy
 
-TODO
+Copy the elements from one range into another. 
+
+* Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, and an iterator to the beginning of the copy range.
+* Returns an iterator to the element after the last one we wrote to in the copy range.
+
+```
+std::vector<int> v1{ 1, 2, 3, 4 };
+std::vector<int> v2(4);
+
+std::vector<int>::iterator it = std::copy(v1.begin(), v1.end(), v2.begin());
+// Points to the element after 4 in v2.
+
+// v2 is { 1 2 3 4 }
+```
 
 ---
 
 ### copy_n
 
-TODO
+Copy the first n elements from one range into another. 
+
+* Pass in an iterator to the beginning of the first range, an int representing how many elements to copy, and an iterator to the beginning of the copy range.
+* Returns an iterator to the element after the last one we wrote to in the copy range.
+
+```
+std::vector<int> v1{ 1, 2, 3, 4 };
+std::vector<int> v2(2);
+
+std::vector<int>::iterator it = std::copy_n(v1.begin(), 2, v2.begin());
+// Points to the element after 2 in v2.
+
+// v2 is { 1 2 }
+```
 
 ---
 
 ### copy_if
 
-TODO
+Copy elements from one range into another if the condition we specify is met. 
+
+* Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, an iterator to the beginning of the copy range, and a lambda function that returns a bool.
+* Returns an iterator to the element after the last one we wrote to in the copy range.
+
+```
+std::vector<int> v1{ 1, 2, 3, 4 };
+std::vector<int> v2(2);
+
+auto lambdaIsEven = [](int i) { return i % 2 == 0; };
+
+std::vector<int>::iterator it = std::copy_if(v1.begin(), v1.end(), v2.begin(), lambdaIsEven);
+// Points to the element after 4 in v2.
+
+// v2 is { 2 4 }
+```
 
 ---
 
 ### copy_backward
 
-TODO
+Copy the elements from one range into another, starting from the back elements and going to the front.
+
+* Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, and an iterator to the end of the copy range.
+* Returns an iterator to the element after the last one we wrote to in the copy range (which is the beginning of the copy range).
+
+```
+std::vector<int> v1{ 1, 2, 3, 4 };
+std::vector<int> v2(4);
+
+std::vector<int>::iterator it = std::copy_backward(v1.begin(), v1.end(), v2.end());
+// Points to the 1 in v2.
+
+// v2 is { 1 2 3 4 }
+```
 
 ---
 
 ### move
 
-TODO
+Move the elements from one range into another. The elements in the original range are valid, but may not be what they were before the move.
+
+* Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, and an iterator to the beginning of the move range.
+* Returns an iterator to the element after the last one we wrote to in the move range.
+
+```
+std::vector<int> v1{ 1, 2, 3, 4 };
+std::vector<int> v2(4);
+
+std::vector<int>::iterator it = std::move(v1.begin(), v1.end(), v2.begin());
+// Points to the element after 4 in v2.
+
+// v1 is { 1 2 3 4 } (It just happens to be unchanged.)
+// v2 is { 1 2 3 4 }
+```
 
 ---
 
 ### move_backward
 
-TODO
+Move the elements from one range into another, starting from the back elements and going to the front. The elements in the original range are valid, but may not be what they were before the move.
+
+* Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, and an iterator to the end of the move range.
+* Returns an iterator to the element after the last one we wrote to in the move range (which is the beginning of the move range).
+
+```
+std::vector<int> v1{ 1, 2, 3, 4 };
+std::vector<int> v2(4);
+
+std::vector<int>::iterator it = std::move_backward(v1.begin(), v1.end(), v2.end());
+// Points to the 1 in v2.
+
+// v1 is { 1 2 3 4 } (It just happens to be unchanged.)
+// v2 is { 1 2 3 4 }
+```
 
 ---
 
@@ -570,7 +652,7 @@ TODO
 
 ---
 
-### unique_xopy
+### unique_copy
 
 TODO
 
@@ -626,7 +708,7 @@ Check if the data in a range is partitioned according to a condition you specify
 * Returns a bool. True if the data is in the beginning all return true and the data afterward all return false. Returns false otherwise.
 
 ```
-std::vector<int> v{ 5, 3, 1, 8, 4, 6};
+std::vector<int> v{ 5, 3, 1, 8, 4, 6 };
 
 auto lambdaIsOdd = [](int i) { return i % 2 != 0; };
 
@@ -636,7 +718,7 @@ bool isPartitioned = std::is_partitioned(v.begin(), v.end(), lambdaIsOdd); // tr
 Note that if the data is all false and then all true, `is_partitioned` will return false. Make sure your lambda will return "true" for the front data. For example..
 
 ```
-std::vector<int> v{ 5, 3, 1, 8, 4, 6};
+std::vector<int> v{ 5, 3, 1, 8, 4, 6 };
 
 auto lambdaIsEven = [](int i) { return i % 2 == 0; };
 
@@ -715,7 +797,7 @@ Get the first element in a partitioned range that returns false for a given cond
 * Returns an iterator to the element. 
 
 ```
-std::vector<int> v{ 5, 3, 1, 8, 4, 6};
+std::vector<int> v{ 5, 3, 1, 8, 4, 6 };
 
 auto lambdaIsOdd = [](int i) { return i % 2 != 0; };
 
@@ -1342,6 +1424,7 @@ std::prev_permutation(s.begin(), s.end());
 * Maybe make a section explaining pairs?
 * Change some of the vector examples to strings.
 * Make note about possible changes because of inconsistencies in words/code.
+* Make note about typos or incorrect information.
 
 Category types?
 1. Figure something out about container/range.
