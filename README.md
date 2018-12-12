@@ -786,73 +786,229 @@ std::generate_n(v.begin(), 3, lambdaReturnNine);
 
 ### remove
 
-TODO
+For a range, removes any element that has a certain value (that you specify). This is done by moving a valid element into the removed element's spot. (The container size does not change.) You'll know where the updated range ends by checking where the returned iterator is. Order is not preserved, and the extra elements at the end of the range are in some valid state.
+
+* Pass in an iterator to the beginning of the range, an iterator to the end of the range, and the value to be removed.
+* Returns an iterator after the last valid element in the range. 
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 5 };
+
+std::vector<int>::iterator it = std::remove(v.begin(), v.end(), 2);
+
+// v is now { 1 3 4 5 5 }
+
+// 'it' points to the element after the first 5 in v.
+```
 
 ---
 
 ### remove_if
 
-TODO
+For a range, removes any element that passes a certain condition (that you specify). This is done by moving a valid element into the removed element's spot. (The container size does not change.) You'll know where the updated range ends by checking where the returned iterator is. Order is not preserved, and the extra elements at the end of the range are in some valid state.
+
+* Pass in an iterator to the beginning of the range, an iterator to the end of the range, and a lambda function that returns a bool.
+* Returns an iterator after the last valid element in the range. 
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 5 };
+
+auto lambdaIsOdd = [](int i) { return i % 2 != 0; };
+
+std::vector<int>::iterator it = std::remove_if(v.begin(), v.end(), lambdaIsOdd);
+
+// v is now { 2 4 3 4 5 }
+
+// 'it' points to the element after the first 4 in v.
+```
 
 ---
 
 ### remove_copy
 
-TODO
+For a given range, copies each element into a new range, except for elements with a certain value (that you specify). The original range is untouched.
+
+* Pass in an iterator to the beginning of the original range, an iterator to the end of the original range, an iterator to the beginning of the copy range, and the value that you want to skip.
+* Returns an iterator after the last valid element in the copy range. 
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 5 };
+std::vector<int> res(5);
+
+std::vector<int>::iterator it = std::remove_copy(v.begin(), v.end(), res.begin(), 2);
+
+// v is now { 1 3 4 5 0 } // (The zero is from the initialization.)
+
+// 'it' points to the element after the 5 in res
+```
 
 ---
 
 ### remove_copy_if
 
-TODO
+For a given range, copies each element into a new range, except for elements that pass a certain condition (that you specify). The original range is untouched.
+
+* Pass in an iterator to the beginning of the original range, an iterator to the end of the original range, an iterator to the beginning of the copy range, and a lambda function that returns a bool.
+* Returns an iterator after the last valid element in the copy range. 
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 5 };
+std::vector<int> res(5);
+
+auto lambdaIsOdd = [](int i) { return i % 2 != 0; };
+
+std::vector<int>::iterator it = std::remove_copy_if(v.begin(), v.end(), res.begin(), lambdaIsOdd);
+
+// v is now { 2 4 0 0 0 } // (The zeroes are from the initialization.)
+
+// 'it' points to the element after the 4 in res
+```
 
 ---
 
 ### unique
 
-TODO
+For a range, remove consecutive duplicate elements. (Ex. { 2 2 3 3 4 4 4 3 } -> { 2 3 4 3 ? ? ? ? } ) This is done by moving a valid element into the removed element's spot. (The container size does not change.) You'll know where the updated range ends by checking where the returned iterator is. Order is not preserved, and the extra elements at the end of the range are in some valid state.
+
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns an iterator after the last valid element in the range. 
+
+```
+std::vector<int> v{ 2, 2, 3, 3, 4, 4, 4, 3 };
+
+std::vector<int>::iterator it = std::unique(v.begin(), v.end());
+
+// v is now { 2 3 4 3 4 4 4 3 }
+
+// 'it' points to the element after the second 3 in v.
+```
 
 ---
 
 ### unique_copy
 
-TODO
+For a range, copies all elements that don't have a duplicate neighbor into a new range (that you specify). (Ex. { 2 2 3 3 4 4 4 3 } -> { 2 3 4 3 } ) The original range is untouched.
+
+* Pass in an iterator to the beginning of the original range, an iterator to the end of the original range, and an iterator to the beginning of the copy range.
+* Returns an iterator after the last copied element in the copy range. 
+
+```
+std::vector<int> v{ 2, 2, 3, 3, 4, 4, 4, 3 };
+std::vector<int> res(8);
+
+std::vector<int>::iterator it = std::unique_copy(v.begin(), v.end(), res.begin());
+
+// v is still { 2 3 4 3 4 4 4 3 }
+// res is now { 2 3 4 3 0 0 0 0 } (The zeroes are from initialization.)
+
+// 'it' points to the element after the second 3 in res.
+```
 
 ---
 
 ### reverse
 
-TODO
+For a range, reverses the order of the elements. (Ex. { 1 2 3 4 } -> { 4 3 2 1 } .)
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns void.
+
+```
+std::vector<int> v{ 1, 2, 3, 4 };
+
+std::reverse(v.begin(), v.end());
+
+// v is { 4 3 2 1 }
+```
 
 ---
 
 ### reverse_copy
 
-TODO
+For a range, copies the elements in verse order into a new range (that you specify). (Ex. { 1 2 3 4 } -> { 4 3 2 1 } .) The original range is untouched.
+
+* Pass in an iterator to the beginning of the original range, an iterator to the end of the original range, and an iterator to the beginning of the copy range.
+* Returns an iterator after the last copied element in the copy range. 
+
+```
+std::vector<int> v{ 1, 2, 3, 4 };
+std::vector<int> res(4);
+
+std::vector<int>::iterator it = std::reverse_copy(v.begin(), v.end(), res.begin());
+
+// v is { 1 2 3 4 }
+// res is { 4 3 2 1 }
+// 'it' points to the element after 1 in res
+```
 
 ---
 
 ### rotate
 
-TODO
+For a range, rotates the elements (in a circular fashion) so that a specified becomes the new first element, and every other element is shifted over.
+
+* Pass in an iterator to the beginning of the range, an iterator to the element we want to be the beginning of the range, and an iterator to the end of the range.
+* Returns void.
+
+```
+std::vector<int> v{ 1, 2, 3, 4 };
+
+std::vector<int>::iterator it = v.begin() + 2; // Points to 3
+
+std::rotate(v.begin(), it, v.end());
+
+// v is now { 3 4 1 2 }
+```
 
 ---
 
 ### rotate_copy
 
-TODO
+For a range, copies the elements into a new range if the elements were rotating (in a circular fashion) so that a specified becomes the new first element, and every other element is shifted over. The original range is untouched.
+
+* Pass in an iterator to the beginning of the original range, an iterator to the element we want to be the beginning of the copy range. an iterator to the end of the original range, and an iterator to the beginning of the copy range.
+* Returns an iterator after the last copied element in the copy range.
+
+```
+std::vector<int> v{ 1, 2, 3, 4 };
+std::vector<int> res(4);
+
+std::vector<int>::iterator it1 = v.begin() + 2; // Points to 3
+std::vector<int>::iterator it2 = std::rotate_copy(v.begin(), it1, v.end(), res.begin());
+
+// v is still { 1 2 3 4 }
+// res is { 3 4 1 2 }
+// 'it2' points to the element after 2 in res
+```
 
 ---
 
 ### random_shuffle
 
-TODO
+For a range, rearranges the elements randomly. (`random_shuffle` uses `rand()` as the random number generator.)
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range.
+* Returns void.
+
+```
+std::vector<int> v{ 1, 2, 3, 4 };
+	
+std::random_shuffle(v.begin(), v.end());
+
+// v is { 1 4 2 3 }
+```
 
 ---
 
 ### shuffle
 
-TODO
+For a range, rearranges the elements randomly using a uniform random number generator (that you must provide). 
+
+* Pass in an iterator to the beginning of the range, and an iterator to the end of the range, and a random number generator.
+* Returns void.
+
+You should really be using `random` or some other library to provide a random number generator. Since the code example isn't simple, I'll just provide a link to [cplusplus.com's shuffle page](http://www.cplusplus.com/reference/algorithm/shuffle/) for sample code..
 
 ---
 
@@ -1587,6 +1743,8 @@ std::prev_permutation(s.begin(), s.end());
 * Change some of the vector examples to strings.
 * Make note about possible changes because of inconsistencies in words/code.
 * Make note about typos or incorrect information.
+* Make note about optional custom comparators
+* Fix all "points to"
 
 Category types?
 1. Figure something out about container/range.
