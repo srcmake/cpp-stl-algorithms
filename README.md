@@ -558,67 +558,229 @@ std::swap(a, b); // Now a = 10 and b = 5.
 
 ### swap_ranges
 
-TODO
+Given two ranges, swaps the items in them (using the `swap` function).
+
+* Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, and an iterator to the beginning of the second range.
+* Returns an iterator to the element after the last one we wrote to in the second range.
+
+```
+std::vector<int> v1{ 1, 2, 3, 4 };
+std::vector<int> v2{ 5, 6, 7, 8 };
+
+std::vector<int>::iterator it = std::swap_ranges(v1.begin(), v1.end(), v2.begin());
+// Points to the element after 4 in v2.
+
+// v1 is { 5 6 7 8 }
+// v2 is { 1 2 3 4 }
+```
 
 ---
 
 ### iter_swap
 
-TODO
+Swap the values that two iterators point too.
+
+* Pass in an iterator to the first value, and an iterator to the second value.
+* Returns void.
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 5 };
+
+std::vector<int>::iterator it1 = v.begin(); // Points to 1
+std::vector<int>::iterator it2 = v.end() - 1; // Points to 4
+	
+std::iter_swap(it1, it2);
+
+// v is now { 5 2 3 4 1 }
+```
 
 ---
 
 ### transform
 
-TODO
+Given one or two ranges, performs an operation on each value of the range and stores that result in another range. (For example, multiply each value in a vector by some number and store it in another vector. Or add each value in two vectors and put that into another vector.)
+
+* Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, (optionally, an iterator to the beginning of the second range if there is one), and an iterator to the beginning of the resulting range, and a lamba expression that accepts the element type(s) and returns the element type that does the operation we want to want to do on the range(s).
+* Returns an iterator to the element after the last one we wrote to in the resulting range.
+
+Example with just one range:
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 5 };
+std::vector<int> res(5);
+
+auto lambdaAddOne = [](int i) { return i + 1; };
+
+std::vector<int>::iterator it = std::transform(v.begin(), v.end(), res.begin(), lambdaAddOne);
+
+// res is { 2 3 4 5 6 }
+```
+
+Example with two ranges:
+
+```
+std::vector<int> v1{ 1, 2, 3 };
+std::vector<int> v2{ 4, 5, 6 };
+std::vector<int> res(3);
+
+auto lambdaMultiply = [](int i, int j) { return i * j; };
+
+std::vector<int>::iterator it = std::transform(v1.begin(), v1.end(), v2.begin(), res.begin(), lambdaMultiply);
+
+// res is { 4 10 18 }
+```
 
 ---
 
 ### replace
 
-TODO
+For a range, replaces an old value (that we specify) with a new value (that we specify). (Ex. Replace all 3's with 7's.)
+
+* Pass in an iterator to the beginning of the range, an iterator to the end of the range, the old value, and the new value.
+* Returns void.
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 3, 5 };
+
+std::replace(v.begin(), v.end(), 3, 7);
+
+// res is now { 1 2 7 4 7 5 }
+```
 
 ---
 
 ### replace_if
 
-TODO
+For a range, replaces an element that passes a certain condition with a new value (that we specify). (Ex. Replace all negative elements with a 0.)
+
+* Pass in an iterator to the beginning of the range, an iterator to the end of the range, a lambda expression that returns a bool, and the new value.
+* Returns void.
+
+```
+std::vector<int> v{ 1, 2, -3, 4, -5 };
+
+auto lambdaIsNegative = [](int i) { return i < 0; };
+
+std::replace_if(v.begin(), v.end(), lambdaIsNegative, 0);
+
+// res is now { 1 2 0 4 0 }
+```
 
 ---
 
 ### replace_copy
 
-TODO
+For a range, copies the elements into another range, and replaces any element (that we specify) with a new value (that we specify) for the new range. Doesn't change the old range. (Ex. Replace all 3's with 7's.)
+
+* Pass in an iterator to the beginning of the range, an iterator to the end of the range, an iterator to the beginning of the new range, the old value, and the new value.
+* Returns an iterator to the element after the last one we wrote to in the resulting range.
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 3, 5 };
+std::vector<int> res(6);
+
+//auto lambdaIsNegative = [](int i) { return i < 0; };
+
+std::vector<int>::iterator it = std::replace_copy(v.begin(), v.end(), res.begin(), 3, 7);
+// Points to the element after 5 in res.
+
+// v is still { 1 2 3 4 3 5 }
+// res is now { 1 2 7 4 7 5 }
+```
 
 ---
 
 ### replace_copy_if
 
-TODO
+For a range, copies the elements into another range, and replaces any element that passes a certain condition with a different value (that we specify) for the new range. Doesn't change the old range. (Ex. Replace all negative elements with a 0.)
+
+* Pass in an iterator to the beginning of the range, an iterator to the end of the range, an iterator to the beginning of the new range, a lambda expression that returns a bool, and the new value.
+* Returns an iterator to the element after the last one we wrote to in the resulting range.
+
+```
+std::vector<int> v{ 1, 2, -3, 4, -5 };
+std::vector<int> res(5);
+
+auto lambdaIsNegative = [](int i) { return i < 0; };
+
+std::vector<int>::iterator it = std::replace_copy_if(v.begin(), v.end(), res.begin(), lambdaIsNegative, 0);
+// Points to the element after the second 0 in res.
+
+// v is still { 1 2 -3 4 -5 }
+// res is now { 1 2 0 4 0 }
+```
 
 ---
 
 ### fill
 
-TODO
+For a range, fill every element with an item (that we specify). (Ex. Fill a range with all 7s.)
+
+* Pass in an iterator to the beginning of the range, an iterator to the end of the range, and the value that we want to fill it with.
+* Returns void.
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 5 };
+
+std::fill(v.begin(), v.end(), 7);
+	
+// v is now { 7 7 7 7 7 }
+```
 
 ---
 
 ### fill_n
 
-TODO
+For a range, fill every element with an item (that we specify). (Ex. Fill the first 3 elements of a range with 7s.)
+
+* Pass in an iterator to the beginning of the range,the number of elements we want to fill, and the value that we want to fill it with.
+* Returns an iterator to the element after the last one we wrote to.
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 5 };
+
+std::fill_n(v.begin(), 3, 7); // Fill the first 3, only.
+	
+// v is now { 7 7 7 4 5 }
+```
 
 ---
 
 ### generate
 
-TODO
+For a range, assigns each element with a value generated by a function (that we specify). (Ex. Use a random number generator function to determine what to assign each element.)
+
+* Pass in an iterator to the beginning of the range, an iterator to the end of the range, and a function (that accepts no parameters) that returns the type of the range.
+* Returns void.
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 5 };
+
+auto lambdaReturnNine = []() { return 9; };
+
+std::generate(v.begin(), v.end(), lambdaReturnNine); 
+	
+// v is now { 9 9 9 9 9 }
+```
 
 ---
 
 ### generate_n
 
-TODO
+For a range, assigns each element with a value generated by a function (that we specify) for the first n elements. (Ex. Use a random number generator function to determine what to assign each element for the first 3 elements.)
+
+* Pass in an iterator to the beginning of the range, the number of elements we want assign to, and a function (that accepts no parameters) that returns the type of the range.
+* Returns an iterator to the element after the last one we wrote to.
+
+```
+std::vector<int> v{ 1, 2, 3, 4, 5 };
+
+auto lambdaReturnNine = []() { return 9; };
+
+std::generate_n(v.begin(), 3, lambdaReturnNine); 
+	
+// v is now { 9 9 9 4 5 }
+```
 
 ---
 
