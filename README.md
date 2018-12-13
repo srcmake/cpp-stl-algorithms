@@ -6,6 +6,18 @@ Now, I'm sure you're a gr8 coder and all and could write your own functions, but
 
 The rest of this README is going to contain short explanations of each STL algorithm, as well as very concise sample code showing how to use the algorithms. Star/bookmark this repository and use it as a reference.
 
+---
+
+## Prerequisites: Pairs, Lambda Expressions, and Iterators
+
+To truly understand how to use the STL algorithms, you should know how STL `pair`s, lambda expressions, and iterators work. 
+
+If you don't know how they work (or even if you do), I strongly recommend that you read [this short blog post](https://www.srcmake.com/home/cpp-stl-algorithms) about how they work, since they're used in the STL algorithms and you won't understand how to use the algorithms without them. 
+
+[C++ Pairs, Lambda Expressions, and Iterators Tutorial](https://www.srcmake.com/home/cpp-stl-algorithms)
+
+---
+
 ## Base Code and C++ version
 
 For the sake of testing this code, we'll specify a very basic C++ file that our code would run in. Note that we include `vector`, because that's the container the examples will use, we're including `iostream` for `cout`, and we including `algorithm` for the actual STL algorithms.
@@ -19,7 +31,7 @@ For the sake of testing this code, we'll specify a very basic C++ file that our 
 
 int main()
 	{
-	// INSERT STD:ALGORITHM HERE
+	// INSERT STD:ALGORITHM EXAMPLE CODE HERE
 	
 	return 0;
 	}
@@ -37,72 +49,7 @@ all:
 
 And so to actually run this code, in a UNIX operating system, in the terminal, simply type `make` in the directory where your makefile and main.cpp are.
 
-
-## Lambda Expressions
-
-Lambda expressions are just functions that we can use to specify some functionality we need (duh). They're especially useful when working with STD algorithms because we can pass a lambda expression to an algorithm to tell the algorithm what to do. 
-
-For example, "find out how many numbers in this vector are greater than 2" is very concise to code if you specify a lambda expression and then use an STL algorithm.
-
-```
-/* // Lambda expression. 
-We don't need to store it in a variable, but we will. 
-Otherwise we'd pass in directly in the algorithm call.
-Capture any variables in this scope inside of the [].
-Put any parameters in the ().
-*/
-auto srcLambda = [](int i) 
-	{ 
-	return i > 2;
-	};
-
-// Use STL's count_if algorithm.
-int count = count_if(srcVec.begin(), srcVec.end(), srcLambda);
-
-std::cout << count << std::endl;
-```
-
-(Most people actually put the lambda expression on one line; I just exaggerated the curly braces for emphasis in this one example.)
-
-Got it? Good. We'll be using lambda expressions a lot.
-
-## Iterators
-
-Iterators are special pointers that point to a specific place in a collection. 
-
-For example, a `stack` data structure can't have it's items indexed by elements like a `vector` could, but we still might want to access a specific element in the stack once we find it. Well...that's what an iterator is. It just points to an element in a collection.
-
-For example, the following code creates an iterator (special pointer) to the first element in a vector named 'srcVector'.
-
-```
-std::vector<int>::iterator it = srcVector.begin();
-```
-
-If you want to access the next element, you could increment the iterator.
-
-```
-it++;
-```
-
-And if you want to access the element that the iterator is pointing too, you can dereference it.
-
-```
-int element = *it;
-```
-
-And if you want the index of that element (if your container uses indices, like a vector), then you can subtract the iterator's position from an iterator point to the beginning of the container.
-
-```
-int index = it - srcVector.begin();
-```
-
-Remember, iterators are just pointers to the elements in a collection. (And if you don't know about pointers, read [this tutorial](https://www.srcmake.com/home/cpp-pointers).)
-
 ---
----
-
-# C++ STL Algorithms
-
 ---
 ---
 
@@ -246,7 +193,8 @@ For a range, find the last occurence of a sequence in that range. (Ex. Get the l
 std::string s = "moo_cookies";
 std::string t = "oo";
 
-std::string::iterator it = std::find_end(s.begin(), s.end(), t.begin(), t.end()); // Points to the 'o' after the 'c'
+std::string::iterator it = std::find_end(s.begin(), s.end(), t.begin(), t.end()); 
+// Points to the 'o' after the 'c'
 ```
 
 ---
@@ -263,7 +211,8 @@ For a range, find the first occurence of a sequence in that range. (Ex. Get the 
 std::string s = "moo_cookies";
 std::string t = "oo";
 
-std::string::iterator it = std::find_first_of(s.begin(), s.end(), t.begin(), t.end()); // Points to the 'o' after the 'm
+std::string::iterator it = std::find_first_of(s.begin(), s.end(), t.begin(), t.end()); 
+// Points to the 'o' after the 'm
 ```
 
 ---
@@ -380,7 +329,8 @@ Check if a range contains a certain sequence. (Ex. Does "this" contain "is"?)
 std::vector<char> v1{ 't', 'h', 'i', 's' };
 std::vector<char> v2{ 'i', 's' };
 	
-std::vector<char>::iterator it = std::search(v1.begin(), v1.end(), v2.begin(), v2.end()); // Points to the 'i' in v1
+std::vector<char>::iterator it = std::search(v1.begin(), v1.end(), v2.begin(), v2.end()); 
+// Points to the 'i' in v1
 ```
 
 ---
@@ -395,7 +345,8 @@ Search a range for a certain number of a specific item. (Ex. Find two 'e's in a 
 ```
 std::vector<char> v{ 'e', 's', 't', 'e', 'e', 'm' };
 	
-std::vector<char>::iterator it = std::search_n(v.begin(), v.end(), 2, 'e'); // Points to the 'e' after the 't'.
+std::vector<char>::iterator it = std::search_n(v.begin(), v.end(), 2, 'e'); 
+// Points to the 'e' after the 't'.
 ```
 
 ---
@@ -416,9 +367,9 @@ bool sIsSmaller = std::lexicographical_compare(s.begin(), s.end(), t.begin(), t.
 
 ---
 
-# Do Work On Data
+# Modify/Copy A Range
 
-Do some work involving some data.
+A range is going to be edited or copied.
 
 ---
 
@@ -434,9 +385,9 @@ std::vector<int> v1{ 1, 2, 3, 4 };
 std::vector<int> v2(4);
 
 std::vector<int>::iterator it = std::copy(v1.begin(), v1.end(), v2.begin());
-// Points to the element after 4 in v2.
 
 // v2 is { 1 2 3 4 }
+// 'it' points to the element after 4 in v2.
 ```
 
 ---
@@ -453,9 +404,9 @@ std::vector<int> v1{ 1, 2, 3, 4 };
 std::vector<int> v2(2);
 
 std::vector<int>::iterator it = std::copy_n(v1.begin(), 2, v2.begin());
-// Points to the element after 2 in v2.
 
 // v2 is { 1 2 }
+// "it" points to the element after 2 in v2.
 ```
 
 ---
@@ -474,9 +425,9 @@ std::vector<int> v2(2);
 auto lambdaIsEven = [](int i) { return i % 2 == 0; };
 
 std::vector<int>::iterator it = std::copy_if(v1.begin(), v1.end(), v2.begin(), lambdaIsEven);
-// Points to the element after 4 in v2.
 
 // v2 is { 2 4 }
+// "it" points to the element after 4 in v2.
 ```
 
 ---
@@ -486,16 +437,16 @@ std::vector<int>::iterator it = std::copy_if(v1.begin(), v1.end(), v2.begin(), l
 Copy the elements from one range into another, starting from the back elements and going to the front.
 
 * Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, and an iterator to the end of the copy range.
-* Returns an iterator to the element after the last one we wrote to in the copy range (which is the beginning of the copy range).
+* Returns an iterator to the last element we wrote to in the copy range (which is the beginning of the copy range).
 
 ```
 std::vector<int> v1{ 1, 2, 3, 4 };
 std::vector<int> v2(4);
 
 std::vector<int>::iterator it = std::copy_backward(v1.begin(), v1.end(), v2.end());
-// Points to the 1 in v2.
 
 // v2 is { 1 2 3 4 }
+// "it" points to the 1 in v2.
 ```
 
 ---
@@ -512,10 +463,10 @@ std::vector<int> v1{ 1, 2, 3, 4 };
 std::vector<int> v2(4);
 
 std::vector<int>::iterator it = std::move(v1.begin(), v1.end(), v2.begin());
-// Points to the element after 4 in v2.
 
 // v1 is { 1 2 3 4 } (It just happens to be unchanged.)
 // v2 is { 1 2 3 4 }
+// 'it' points to the element after 4 in v2.
 ```
 
 ---
@@ -525,17 +476,17 @@ std::vector<int>::iterator it = std::move(v1.begin(), v1.end(), v2.begin());
 Move the elements from one range into another, starting from the back elements and going to the front. The elements in the original range are valid, but may not be what they were before the move.
 
 * Pass in an iterator to the beginning of the first range, an iterator to the end of the first range, and an iterator to the end of the move range.
-* Returns an iterator to the element after the last one we wrote to in the move range (which is the beginning of the move range).
+* Returns an iterator to the last element we wrote to in the move range (which is the beginning of the move range).
 
 ```
 std::vector<int> v1{ 1, 2, 3, 4 };
 std::vector<int> v2(4);
 
 std::vector<int>::iterator it = std::move_backward(v1.begin(), v1.end(), v2.end());
-// Points to the 1 in v2.
 
 // v1 is { 1 2 3 4 } (It just happens to be unchanged.)
 // v2 is { 1 2 3 4 }
+// 'it' points to the 1 in v2.
 ```
 
 ---
@@ -568,10 +519,10 @@ std::vector<int> v1{ 1, 2, 3, 4 };
 std::vector<int> v2{ 5, 6, 7, 8 };
 
 std::vector<int>::iterator it = std::swap_ranges(v1.begin(), v1.end(), v2.begin());
-// Points to the element after 4 in v2.
 
 // v1 is { 5 6 7 8 }
 // v2 is { 1 2 3 4 }
+// 'it' points to the element after 4 in v2.
 ```
 
 ---
@@ -682,10 +633,10 @@ std::vector<int> res(6);
 //auto lambdaIsNegative = [](int i) { return i < 0; };
 
 std::vector<int>::iterator it = std::replace_copy(v.begin(), v.end(), res.begin(), 3, 7);
-// Points to the element after 5 in res.
 
 // v is still { 1 2 3 4 3 5 }
 // res is now { 1 2 7 4 7 5 }
+// 'it' points to the element after 5 in res.
 ```
 
 ---
@@ -704,10 +655,10 @@ std::vector<int> res(5);
 auto lambdaIsNegative = [](int i) { return i < 0; };
 
 std::vector<int>::iterator it = std::replace_copy_if(v.begin(), v.end(), res.begin(), lambdaIsNegative, 0);
-// Points to the element after the second 0 in res.
 
 // v is still { 1 2 -3 4 -5 }
 // res is now { 1 2 0 4 0 }
+// 'it' points to the element after the second 0 in res.
 ```
 
 ---
@@ -1234,7 +1185,8 @@ Finds the first element in a range that isn't sorted.
 ```
 std::vector<int> v{ 2, 3, 4, 1, 5 };
 
-std::vector<int>::iterator it = std::is_sorted_until(v.begin(), v.end()); // Points to the 1
+std::vector<int>::iterator it = std::is_sorted_until(v.begin(), v.end()); 
+// Points to the 1
 ```
 
 ---
@@ -1360,12 +1312,12 @@ Given two sorted ranges, combine them to form one larger sorted range.
 ```
 std::vector<int> v1{ 1, 3, 5, 9 };
 std::vector<int> v2{ 2, 4, 6, 7 };
-std::vector<int> v3(8);
+std::vector<int> res(8);
 
-std::vector<int>::iterator it = std::merge(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin()); 
-// Points to v3.end()
+std::vector<int>::iterator it = std::merge(v1.begin(), v1.end(), v2.begin(), v2.end(), res.begin()); 
 
-// v3 is { 1, 2, 3, 4, 5, 6, 7, 9 }
+// res is { 1, 2, 3, 4, 5, 6, 7, 9 }
+// 'it' points to the element after 9 in res
 ```
 
 ---
@@ -1413,12 +1365,12 @@ Given two sorted ranges, creates a new sorted range from the elements that exist
 ```
 std::vector<int> v1{ 1, 2, 3 };
 std::vector<int> v2{ 1, 1, 2, 4 };
-std::vector<int> v3(7);
+std::vector<int> res(7);
 
-std::vector<int>::iterator it = std::set_union(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
-// Points to the element after 4 in v3.
+std::vector<int>::iterator it = std::set_union(v1.begin(), v1.end(), v2.begin(), v2.end(), res.begin());
 
-// v3 is { 1 1 2 3 4 0 0 } (Zeroes were from the initialization)
+// res is { 1 1 2 3 4 0 0 } (Zeroes were from the initialization)
+// 'it' points to the element after 4 in res.
 ```
 
 Notice that there are only two 1's in the resulting range. `set_union` will take the maximum number of an element from one range; it won't just add them. 
@@ -1435,12 +1387,12 @@ Given two sorted ranges, created a new sorted range from the elements that exist
 ```
 std::vector<int> v1{ 1, 2, 3 };
 std::vector<int> v2{ 1, 1, 2, 4 };
-std::vector<int> v3(7);
+std::vector<int> res(7);
 
-std::vector<int>::iterator it = std::set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
-// Points to the element after 2 in v3.
+std::vector<int>::iterator it = std::set_intersection(v1.begin(), v1.end(), v2.begin(), v2.end(), res.begin());
 
-// v3 is { 1 2 0 0 0 0 0 } (Zeroes were from the initialization)
+// res is { 1 2 0 0 0 0 0 } (Zeroes were from the initialization)
+// 'it' points to the element after 2 in res.
 ```
 
 ---
@@ -1455,12 +1407,12 @@ Given two sorted ranges, created a new sorted range from the elements that exist
 ```
 std::vector<int> v1{ 1, 2, 3 };
 std::vector<int> v2{ 1, 1, 2, 4 };
-std::vector<int> v3(7);
+std::vector<int> res(7);
 
-std::vector<int>::iterator it = std::set_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
-// Points to the element after 3 in v3.
+std::vector<int>::iterator it = std::set_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), res.begin());
 
-// v3 is { 3 0 0 0 0 0 0 } (Zeroes were from the initialization)
+// res is { 3 0 0 0 0 0 0 } (Zeroes were from the initialization)
+// 'it' points to the element after 3 in res.
 ```
 
 ---
@@ -1475,15 +1427,15 @@ Given two sorted ranges, created a new sorted range from the elements that exist
 ```
 std::vector<int> v1{ 1, 2, 3 };
 std::vector<int> v2{ 1, 1, 2, 4 };
-std::vector<int> v3(7);
+std::vector<int> res(7);
 
-std::vector<int>::iterator it = std::set_symmetric_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), v3.begin());
-// Points to the element after 4 in v3.
+std::vector<int>::iterator it = std::set_symmetric_difference(v1.begin(), v1.end(), v2.begin(), v2.end(), res.begin());
 
-// v3 is { 1 3 4 0 0 0 0 } (Zeroes were from the initialization)
+// res is { 1 3 4 0 0 0 0 } (Zeroes were from the initialization)
+// 'it' points to the element after 4 in res.
 ```
 
-Notice the 1 in v3. That's there because v2 has an extra 1 that v1 does not have. 
+Notice the 1 in res. That's there because v2 has an extra 1 that v1 does not have. 
 
 ---
 
@@ -1644,6 +1596,8 @@ Returns an iterator to the smallest element for a given range.
 std::vector<int> v{ 5, 3, 7, 2, 1 };
 
 std::vector<int>::iterator it = std::min_element(v.begin(), v.end());
+
+// 'it' points to the 1 in v
 ```
 
 ---
@@ -1659,6 +1613,8 @@ Returns an iterator to the largest element for a given range.
 std::vector<int> v{ 5, 3, 7, 2, 1 };
 
 std::vector<int>::iterator it = std::max_element(v.begin(), v.end());
+
+// 'it' points to the 7 in v
 ```
 
 ---
@@ -1721,32 +1677,22 @@ std::prev_permutation(s.begin(), s.end());
 
 # End Notes
 
-### References
-
-* [cplusplus.com's list of STL algorithms.](http://www.cplusplus.com/reference/algorithm/)
-
-* [Jonathan Boccara's CppCon Talk about the STL Algorithms.](https://www.youtube.com/watch?v=2olsGf6JIkU)
-
 ### Notes
 
 * The `auto` keyword was purposely not used often in this documentation, but use it in your real code.
 
 * Note that I say "range" a lot, even though I specifically use `vector.begin()` and `vector.end()` most of the time. Remember that your range can be anywhere in the container you want.
 
-* If you see a problem or if an example is used incorrectly or doesn't work, feel free to raise a pull request, create an issue, or message me on one of the platforms mentioned above. This is meant to be a very very short guide and easy to use, and so some details may be purposely omitted. (Or maybe I'm just a scrub and I don't know how to code LUL.)
+* Some algorithms also have an overloaded version to provide a custom comparator (for example, `stable_sort`), but I've ommitted those to keep the examples short.
 
-### Todo
+* Pay careful attention to the ordering of the parameters, some are not intuitive. (Ex. `nth_element`)
 
-* Make a custom comparator example for stable_sort.
-* Make a note that nth_element has the parameter ordering weird. 
-* Maybe make a section explaining pairs?
-* Change some of the vector examples to strings.
-* Make note about possible changes because of inconsistencies in words/code.
-* Make note about typos or incorrect information.
-* Make note about optional custom comparators
-* Fix all "points to"
+### See a problem? 
 
-Category types?
-1. Figure something out about container/range.
-2. Modify the container/range.
-2. Find one data point. (If get iterator back then it's this.)
+Let me know. You can contact me through the [contact form](https://www.srcmake.com/contact.html) on my website, through the [social media](https://www.srcmake.com/) listed on my website, or by making a github issue/pull request.
+
+### References
+
+* [cplusplus.com's list of STL algorithms.](http://www.cplusplus.com/reference/algorithm/)
+
+* [Jonathan Boccara's CppCon Talk about the STL Algorithms.](https://www.youtube.com/watch?v=2olsGf6JIkU)
